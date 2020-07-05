@@ -20,12 +20,24 @@ def dynamic_fibonacci(n):  # O (n)
             return cache[n]
 
 
+def bottom_up_fibonacci(n):
+    answer = [0, 1]
+    for i in range(2, n):
+        answer.append(answer[i-2] + answer[i-1])
+    return answer.pop()
+
+
 t1 = time.time()
-print(fibonacci(15))
+print(f'Regular approach:\n {fibonacci(30)}')
 t2 = time.time()
 print(t2-t1)
 
 t1 = time.time()
-print(dynamic_fibonacci(15))
+print(f'Dynamic Programming approach:\n {dynamic_fibonacci(30)}')
+t2 = time.time()
+print(t2-t1)
+
+t1 = time.time()
+print(f'Bottom up approach:\n {bottom_up_fibonacci(30)}')
 t2 = time.time()
 print(t2-t1)
