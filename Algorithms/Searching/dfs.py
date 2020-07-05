@@ -5,10 +5,9 @@ class Node():
         self.right = None
 
 
-class BFS():
+class DFS():
     def __init__(self):
         self.root = None
-        
 
     def insert(self, value):
         new_node = Node(value)
@@ -49,38 +48,51 @@ class BFS():
     def remove(self, value):
         pass
 
-    def breadth_first_search(self):
-        curr_node = self.root
-        bfs_list = []
-        queue = []
-        queue.append(curr_node)
+    def inorder(self):
+        return traverse_inorder(self.root, [])
 
-        while len(queue) > 0:
-            curr_node = queue.pop(0)
-            bfs_list.append(curr_node.value)
-            if curr_node.left:
-                queue.append(curr_node.left)
-            if curr_node.right:
-                queue.append(curr_node.right)
-        return bfs_list
-    def recursive_bfs(self,queue,bfs_list):
-        if len(queue) == 0:
-            return bfs_list
-        curr_node = queue.pop(0)
-        bfs_list.append(curr_node.value)
-        if curr_node.left:
-            queue.append(curr_node.left)
-        if curr_node.right:
-            queue.append(curr_node.right)
-        return self.recursive_bfs(queue, bfs_list)
+    def preorder(self):
+        return traverse_preorder(self.root, [])
 
-bfs = BFS()
-bfs.insert(9)
-bfs.insert(4)
-bfs.insert(6)
-bfs.insert(20)
-bfs.insert(170)
-bfs.insert(15)
-bfs.insert(1)
-print(bfs.breadth_first_search())
-print(bfs.recursive_bfs([bfs.root],[]))
+    def postorder(self):
+        return traverse_postorder(self.root, [])
+
+
+def traverse_inorder(node, dfs_list):
+    if node.left:
+        traverse_inorder(node.left, dfs_list)
+    dfs_list.append(node.value)
+    if node.right:
+        traverse_inorder(node.right, dfs_list)
+    return dfs_list
+
+
+def traverse_preorder(node, dfs_list):
+    dfs_list.append(node.value)
+    if node.left:
+        traverse_preorder(node.left, dfs_list)
+    if node.right:
+        traverse_preorder(node.right, dfs_list)
+    return dfs_list
+
+
+def traverse_postorder(node, dfs_list):
+    if node.left:
+        traverse_postorder(node.left, dfs_list)
+    if node.right:
+        traverse_postorder(node.right, dfs_list)
+    dfs_list.append(node.value)
+    return dfs_list
+
+
+dfs = DFS()
+dfs.insert(9)
+dfs.insert(4)
+dfs.insert(6)
+dfs.insert(20)
+dfs.insert(170)
+dfs.insert(15)
+dfs.insert(1)
+print(dfs.inorder()) #inorder
+print(dfs.preorder()) #preorder
+print(dfs.postorder()) #postorder
